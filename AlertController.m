@@ -50,18 +50,22 @@
     [vc presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelTitle otherButtonTitles:(NSArray *)otherButtonTitles presentingViewController:(UIViewController *)vc tag:(NSInteger)tag
+#pragma mark - text field functions
+
+- (id)initAlertWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelTitle otherButtonTitles:(NSArray *)otherButtonTitles presentingViewController:(UIViewController *)vc tag:(NSInteger)tag
 {
+    self = [super init];
+    
     self.uiAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     if (cancelTitle) {
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * action)
-                                 {
-                                     [_uiAlertController dismissViewControllerAnimated:YES completion:nil];
-                                     if ([delegate respondsToSelector:@selector(alertControllerDidCancel)]) {
-                                         [delegate alertControllerDidCancel];
-                                     }
-                                 }];
+             {
+                 [_uiAlertController dismissViewControllerAnimated:YES completion:nil];
+                 if ([delegate respondsToSelector:@selector(alertControllerDidCancel)]) {
+                     [delegate alertControllerDidCancel];
+                 }
+             }];
         [_uiAlertController addAction:cancel];
     }
     
@@ -76,8 +80,7 @@
                              }];
         [_uiAlertController addAction:ok];
     }
-    
-    [vc presentViewController:_uiAlertController animated:YES completion:nil];
+    return self;
 }
 
 #pragma mark - text field
